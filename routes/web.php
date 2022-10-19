@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cat;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,22 @@ Route::get('/students', function () {
 
 
 Route::get('/students/{id}', function ($id) {
-    return view('student' , [
+    return view('student', [
         'student' => Student::getById($id)
+    ]);
+});
+
+Route::get('/cats', function () {
+    $cats = [];
+    $colors = ['red', 'blue', 'green', 'yellow', 'black', 'white'];
+    for ($i = 0; $i < 10; $i++) {
+        $cat = new Cat();
+        $cat->setColor($colors[rand(0, 5)]);
+        $cat->setEyesNumber(rand(0, 3));
+        $cat->setTailsNumber(rand(0, 9));
+        $cats[] = $cat;
+    }
+    return view('cats', [
+        'cats' => $cats
     ]);
 });
